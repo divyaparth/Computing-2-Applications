@@ -16,9 +16,8 @@ const Exam = Object.create(null);
 //    for example:
 //      an input list of [1,2,3,4,5,6,7,8]
 //      returns [1,4,7]
-Exam.every_third = function (list) {
-    "use strict"
-    list.filter(listItem => list.findIndex(listItem) % 3 === 0);
+Exam.every_third = function (list) { 
+    return list.filter((element, index) => index % 3 === 0);
     };
 
 // Strings
@@ -32,18 +31,17 @@ Exam.every_third = function (list) {
 //                            "jack and jill went up the"
 //       returns "the jack cow and jumped jill over went the up moon the"
 Exam.merge_sentences = function (firstSen, secondSen) {
-    "use strict";
-    var mergedString = '';
-    if (firstSen.length !== secondSen.length) {
+    let mergedString = '';
+    let wordsOne = firstSen.split(" ");
+    let wordsTwo = secondSen.split(" ");
+    if (wordsOne.length !== wordsTwo.length) {
         throw "ValueError";
     } else {
-        let wordsOne = firstSen.split(" ");
-        let wordsTwo = secondSen.split(" ");
-        for (let i = 0; i = firstSen.length - 1; i++) {
-            mergedString += wordsOne[i] + " " + wordsTwo[i] + " ";
+        for (let i = 0; i < wordsOne.length; i++) {
+            mergedString += wordsOne[i] + ' ' + wordsTwo[i] + ' ';
         };
     }
-    return mergedString;
+    return mergedString.trim();
 };
 
 // Write a function that returns the number of lowercase letters in
@@ -52,12 +50,11 @@ Exam.merge_sentences = function (firstSen, secondSen) {
 //          the input "sPonGe bOb"
 //          returns 6
 Exam.lowercase_count = function (inputString) {
-    "use strict";
     var lowerList = [];
     let noSpace = inputString.replace(" ", "");
     let inputList = noSpace.split("");
-    let lowerInputList = inputList.toLowerCase();
-    for (let i = 0; i = inputList.length; i++) {
+    let lowerInputList = inputList.map(letter => letter.toLowerCase());
+    for (let i = 0; i < inputList.length; i++) {
         if (inputList[i] === lowerInputList[i]) {
             lowerList.push(inputList[i]);
         }
@@ -65,34 +62,34 @@ Exam.lowercase_count = function (inputString) {
     return lowerList.length;
 };
 
-
 // Objects
 
-// Write a function that returns the longest a key in the input object
+// Write a function that returns the longest key in the input object
 // whose keys are all strings.
 Exam.longest_key = function (inputDict) {
-    "use strict";
     var keyLengths = {};
     for (let key in inputDict) {
-        keyLengths[key] = inputDict[key].length;
+        keyLengths[key] = key.length;
     }
     let keyValues = Object.values(keyLengths);
-    return Math.max(...keyValues);
+    let longestKeyValue = Math.max(...keyValues);
+    let result = Object.keys(keyLengths).find(key => keyLengths[key] === longestKeyValue);
+    return result;
 };
+
 
 // Write a function that returns the largest value that is an even value in the
 // input dictionary whose values are all whole numbers.
 Exam.value_greatest_even = function (inputDict) {
-    "use strict";
-    evenValues = [];
+    let evenValues = [];
     for (let key in inputDict) {
         if (inputDict[key] % 2 === 0) {
             evenValues.push(inputDict[key]);
         }
     }
-    return Math.max(...evenValues);
+    let result = Math.max(...evenValues);
+    return result;
 };
-
 
 // Arguments
 
@@ -114,7 +111,6 @@ Exam.greeting = function (username, location='London') {
 // The function returns the calculation x * scalar + offset for the input x
 // if the output value of the calculation is positive, otherwise it returns 0.
 Exam.floor_line = function (input, scalar = 1, offset = 0) {
-    "use strict";
     let calculation = (input*scalar) + offset
     if (calculation > 0) {
         return calculation;
